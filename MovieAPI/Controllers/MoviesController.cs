@@ -5,8 +5,10 @@ using Microsoft.EntityFrameworkCore;
 using MovieBL.Abstracts;
 using MovieDataAccess.Utilities.Result;
 using MovieEntities.Concretes;
+using MovieEntities.EntitiyDTO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.ComponentModel;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
@@ -19,15 +21,15 @@ namespace MovieAPI.Controllers
     public class MoviesController : ControllerBase
     {
         private readonly IMovieService _movie;
-        public MoviesController(IMovieService movie)
+        private readonly IUserService _user;
+        public MoviesController(IMovieService movie, IUserService user)
         {
             _movie = movie;
+            _user = user;
         }
 
-
-
-
-
+        [Description("Filmleri getir")]
+        [Route("GetMovies")]
         public async Task<Movie[]> GetMoviesFromApi()
         {
             using (var client = new HttpClient())
@@ -60,7 +62,47 @@ namespace MovieAPI.Controllers
         }
 
 
+        [Description("Filmleri, başlangıç ve büyüklük parametresi alarak getiriyor")]//sayfa büyüklüğünü bu şekilde ele aldım
+        [Route("GetMovies")]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Movie>>> GetMoviesByPage(int pageSize, int pageStart)
+        {
 
+            var movies = await _movie.GetMovieByPages(pageSize, pageStart);
+            if (movies == null)
+            {
+                return NotFound();
+            }
+            return Ok(movies);
+        }
+
+        //var jwt = Request.Cookies["jwt"];
+        //var token = await _tokenHelper.Verify(jwt);
+        //int userId = int.Parse(token.Issuer);
+        //var user = _user.GetByID(userId);
+
+        [HttpPost("{userId}/{movieId}/vote/note")]
+        public async Task<ActionResult> AddRating(int userId, int movieId, int vote, string note)
+        {
+            var user = await _user.GetById(userId);
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+
+            var movie = await _movie.GetMovieById(movieId);
+            if (movie == null)
+            {
+                return NotFound("Movie not found");
+            }
+           
+            if (vote < 1 || vote> 10)
+            {
+                return BadRequest("Rating must be between 1 and 10");
+            }
+           var result= _movie.AddMovieRating(userId, movieId, vote,note);
+            return Ok(result); 
+        }
 
 
 

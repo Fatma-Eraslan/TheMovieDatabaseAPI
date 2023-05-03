@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MovieEntities.Concretes
 {
-    public class Movie
+    public class Movie //To do:MovieDetail class ı aç
     {
         public Movie()
         {
@@ -48,16 +48,16 @@ namespace MovieEntities.Concretes
         public int Budget { get; set; }
 
         [JsonProperty("adult")]
-        public bool Adult { get; set; }
-           
-
-        public List<Genre> Genres { get; set; }
-   
-     
-      
-       
-   
-     
+        public bool Adult { get; set; }  
         
+        public List<Genre> Genres { get; set; }
+        public List<MovieRating> Ratings { get; set; }
+
+
+
+
+
+
+
     }
 }

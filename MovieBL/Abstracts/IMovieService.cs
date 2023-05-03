@@ -9,8 +9,9 @@ namespace MovieBL.Abstracts
 {
     public interface IMovieService
     {
+        Task<Movie> GetMovieById(int id);
         Task<List<Movie>> GetMovies();
-        public Task AddMovieAsync(Movie movie);
-        public Task<Movie> GetMovieById(int id);
+        Task<List<Movie>> GetMovieByPages(int pageSize, int pageStart);
+        Task AddMovieRating(int userId, int movieId, int vote, string note);
     }
 }

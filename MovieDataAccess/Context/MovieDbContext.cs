@@ -14,6 +14,8 @@ namespace MovieDataAccess.Context
     {
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Genre> Genres { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<MovieRating> MoviesRatings { get; set; }    
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -28,6 +30,7 @@ namespace MovieDataAccess.Context
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Movie>().HasMany(m => m.Genres).WithMany(g => g.Movies);//*-*
+            modelBuilder.Entity<MovieRating>().HasKey(x => new { x.UserId, x.MovieId });
             modelBuilder.ApplyConfiguration(new MovieConfiguration());
 
             //modelBuilder.Entity<Movie>(entity =>

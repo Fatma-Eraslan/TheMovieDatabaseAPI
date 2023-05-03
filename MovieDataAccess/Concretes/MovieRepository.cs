@@ -18,27 +18,60 @@ namespace MovieDataAccess.Concretes
         //{
         //    _context = context;
         //}
-              
+
 
         public async Task<Movie> GetMovieById(int id)
         {
             using (MovieDbContext _context = new MovieDbContext())
             {
-                var movie =await _context.FindAsync<Movie>(id);
+                var movie = await _context.FindAsync<Movie>(id);
                 return movie;
             }
         }
 
-        //public async Task<List<Movie>> GetAllMoviesAsync()
-        //{
-        //    return await _context.Movies.ToListAsync();
-        //}
+        public async Task<List<Movie>> GetMovies()
+        {
+            using (MovieDbContext _context = new MovieDbContext())
+            {
+                return await _context.Movies.ToListAsync();
+            }
+        }
 
-        //public async Task<Movie> GetMovieByIdAsync(int id)
-        //{
-        //    return await _context.Movies.FindAsync(id);
-        //}              
 
-        
+        public async Task<List<Movie>> GetMovieByPages(int pageSize, int pageStart)
+        {
+            using (MovieDbContext _context = new MovieDbContext())
+            {
+                var movies = await _context.Movies.OrderBy(x => x.Id).Skip((pageStart - 1) * pageSize).Take(pageSize).ToListAsync();//başlangıç sayfa dahil et
+                //
+                return movies;
+            }
+        }
+
+        public async Task AddMovieRating(int userId, int movieId, int vote, string note)
+        {
+            using (MovieDbContext _context = new MovieDbContext())
+            {
+                var existingRating = await _context.MoviesRatings.FirstOrDefaultAsync(x => x.UserId == userId && x.MovieId == movieId);//zateb varsa ekletme, belki sora güncelleme modülü.
+                if (existingRating == null)
+                {
+                    var movieRating = new MovieRating
+                    {
+                        MovieId = movieId,
+                        UserId = userId,
+                        Vote = vote,
+                        Note = note
+                    };
+                    _context.MoviesRatings.Add(movieRating);
+                    await _context.SaveChangesAsync();
+                }              
+                
+            }
+        }
+
+
+
+
+
     }
 }
