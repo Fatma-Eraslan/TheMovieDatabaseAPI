@@ -1,0 +1,12 @@
+C:\Users\FATOŞ\Desktop\MOVİE\TheMovieDatabaseAPI\MovieEntities\bin\Debug\net6.0\MovieEntities.deps.json
+C:\Users\FATOŞ\Desktop\MOVİE\TheMovieDatabaseAPI\MovieEntities\bin\Debug\net6.0\MovieEntities.dll
+C:\Users\FATOŞ\Desktop\MOVİE\TheMovieDatabaseAPI\MovieEntities\bin\Debug\net6.0\MovieEntities.pdb
+C:\Users\FATOŞ\Desktop\MOVİE\TheMovieDatabaseAPI\MovieEntities\obj\Debug\net6.0\MovieEntities.csproj.AssemblyReference.cache
+C:\Users\FATOŞ\Desktop\MOVİE\TheMovieDatabaseAPI\MovieEntities\obj\Debug\net6.0\MovieEntities.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\FATOŞ\Desktop\MOVİE\TheMovieDatabaseAPI\MovieEntities\obj\Debug\net6.0\MovieEntities.AssemblyInfoInputs.cache
+C:\Users\FATOŞ\Desktop\MOVİE\TheMovieDatabaseAPI\MovieEntities\obj\Debug\net6.0\MovieEntities.AssemblyInfo.cs
+C:\Users\FATOŞ\Desktop\MOVİE\TheMovieDatabaseAPI\MovieEntities\obj\Debug\net6.0\MovieEntities.csproj.CoreCompileInputs.cache
+C:\Users\FATOŞ\Desktop\MOVİE\TheMovieDatabaseAPI\MovieEntities\obj\Debug\net6.0\MovieEntities.dll
+C:\Users\FATOŞ\Desktop\MOVİE\TheMovieDatabaseAPI\MovieEntities\obj\Debug\net6.0\refint\MovieEntities.dll
+C:\Users\FATOŞ\Desktop\MOVİE\TheMovieDatabaseAPI\MovieEntities\obj\Debug\net6.0\MovieEntities.pdb
+C:\Users\FATOŞ\Desktop\MOVİE\TheMovieDatabaseAPI\MovieEntities\obj\Debug\net6.0\ref\MovieEntities.dll

@@ -1,8 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "it7ZtZTQTjtJ4Yrh+sS6OVjTbdSN+9wi4o2+nL1NYgMCLjofIB92YDYLBvCZZvVuaDocH0fQ6yS+Stm5wG86bQ==",
+  "dgSpecHash": "dOeIWDkM1jsGFXSvkN+kEBFuj5HQdE4jlSS/psA7UOGMewGYf97Ixk4k7u8sZXsI2gXKwJTkbT5VacEw9C4+bg==",
   "success": true,
   "projectFilePath": "C:\\Users\\FATOŞ\\Desktop\\MOVİE\\TheMovieDatabaseAPI\\MovieEntities\\MovieEntities.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\FATOŞ\\.nuget\\packages\\microsoft.odata.edm\\7.15.0\\microsoft.odata.edm.7.15.0.nupkg.sha512",
+    "C:\\Users\\FATOŞ\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
+    "C:\\Users\\FATOŞ\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.6.0\\system.runtime.compilerservices.unsafe.4.6.0.nupkg.sha512",
+    "C:\\Users\\FATOŞ\\.nuget\\packages\\system.text.encodings.web\\4.7.2\\system.text.encodings.web.4.7.2.nupkg.sha512",
+    "C:\\Users\\FATOŞ\\.nuget\\packages\\system.text.json\\4.6.0\\system.text.json.4.6.0.nupkg.sha512"
+  ],
   "logs": []
 }
