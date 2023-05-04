@@ -9,9 +9,12 @@ using MovieEntities.EntitiyDTO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.ComponentModel;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Mail;
 using System.Text.Json;
+
 
 namespace MovieAPI.Controllers
 {
@@ -75,13 +78,18 @@ namespace MovieAPI.Controllers
             }
             return Ok(movies);
         }
+        #region
+        /* bu şekilde kullanıcıyı cookilerden alıyorum çalıştığım projede
+        var jwt = Request.Cookies["jwt"];
+        var token = await _tokenHelper.Verify(jwt);
+        int userId = int.Parse(token.Issuer);
+        var user = _user.GetByID(userId); 
+        */
+        #endregion
 
-        //var jwt = Request.Cookies["jwt"];
-        //var token = await _tokenHelper.Verify(jwt);
-        //int userId = int.Parse(token.Issuer);
-        //var user = _user.GetByID(userId);
 
         [HttpPost("{userId}/{movieId}/vote/note")]
+        [Description("Parametre olarak alınan verilerle filme kullanıcı tarafından not ve puan eklendi.")]
         public async Task<ActionResult> AddRating(int userId, int movieId, int vote, string note)
         {
             var user = await _user.GetById(userId);
@@ -95,21 +103,77 @@ namespace MovieAPI.Controllers
             {
                 return NotFound("Movie not found");
             }
-           
-            if (vote < 1 || vote> 10)
+
+            if (vote < 1 || vote > 10)
             {
                 return BadRequest("Rating must be between 1 and 10");
             }
-           var result= _movie.AddMovieRating(userId, movieId, vote,note);
-            return Ok(result); 
+            var result = _movie.AddMovieRating(userId, movieId, vote, note);
+            return Ok(result);
+        }
+
+
+        [HttpGet("{movieId}/{userId}")]
+        [Description("Parametre olarak alınan kullanıcı ve film id sine göre film detaylarını etirme.")]
+        public async Task<ActionResult> GetMovieDetails(int movieId, int userId)
+        {
+            var user = await _user.GetById(userId);
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+
+            var movie = await _movie.GetMovieById(movieId);
+            if (movie == null)
+            {
+                return NotFound("Movie not found");
+            }
+            var result = _movie.GetMovieDetails(movieId, userId);
+            return Ok(result);
         }
 
 
 
 
+        [HttpPost("{movieId}/{userId}/toemail")]
+        [Description("Parametre olarak alınan mail adresine, simple mail transfer protokolünü kullanarak film tavsiye maili gönderme.")]
+        public async Task<IActionResult> SendRecommendationEmailAsync(int movieId, int userId,string toemail)//mail servisi yazılabilir!
+        {
+            try
+            {
+                var user = await _user.GetById(userId);
+                var movie = await _movie.GetMovieById(movieId);
 
+                if (user == null || movie == null)
+                {
+                    return BadRequest();
+                }
 
+                var emailaddress = "sample@gmail.com";
+                var password = "123";
 
+                var smtpClient = new SmtpClient("smtp.gmail.com", 587)
+                {
+                    Credentials = new NetworkCredential(emailaddress, password),
+                    EnableSsl = true
+                };
 
+                var message = new MailMessage(emailaddress, toemail)
+                {
+                    Subject = "Movie Recommendation",
+                    Body = $"Hello, you have received a great movie recommendation from {user.Name}: {movie.Title}. Enjoy watching.",
+                    IsBodyHtml = false
+                };
+
+                smtpClient.Send(message);
+
+                return Ok();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

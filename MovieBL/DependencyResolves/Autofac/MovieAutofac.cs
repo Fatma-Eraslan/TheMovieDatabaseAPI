@@ -17,6 +17,9 @@ namespace MovieBL.DependencyResolves.Autofac
         {
             builder.RegisterType<MovieRepository>().As<IMovieRepository>();
             builder.RegisterType<MovieService>().As<IMovieService>();
+
+            builder.RegisterType<UserRepository>().As<IUserRepository>();
+            builder.RegisterType<UserService>().As<IUserService>(); 
         }
     }
 }

@@ -2,6 +2,7 @@
 using MovieDataAccess.Abstracts;
 using MovieDataAccess.Context;
 using MovieEntities.Concretes;
+using MovieEntities.EntitiyDTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,14 +65,37 @@ namespace MovieDataAccess.Concretes
                     };
                     _context.MoviesRatings.Add(movieRating);
                     await _context.SaveChangesAsync();
-                }              
+                }
+
+            }
+        }
+       
+        public async Task<RatingsDto> GetMovieDetails(int movieId, int userId)//burada filmin belirli bilgilerini yazdıracağım.
+        {
+            using (MovieDbContext _context = new MovieDbContext())
+            {
+                var movie =await _context.Movies.FindAsync(movieId);
+                var movierating=_context.MoviesRatings.Where(x=>x.MovieId==movieId&& x.UserId == userId).FirstOrDefault();
+                var voteavg=await _context.MoviesRatings.Where(x=>x.MovieId==movieId).Select(x=>x.Vote).AverageAsync();
+
+                RatingsDto dto = new RatingsDto
+                {
+                    Title=movie.Title,
+                    Overview=movie.Overview,
+                    OriginalLanguage=movie.OriginalLanguage,
+                    OriginalTitle=movie.OriginalTitle,  
+                    Popularity=movie.Popularity,
+                    Budget=movie.Budget,
+                    Adult=movie.Adult,  
+                    Note=movierating.Note,
+                    Vote=movierating.Vote,
+                    VoteAverage=voteavg
+                };
+                return dto;
+
                 
             }
         }
-
-
-
-
 
     }
 }

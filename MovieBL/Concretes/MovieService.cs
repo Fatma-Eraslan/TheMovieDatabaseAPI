@@ -77,5 +77,19 @@ namespace MovieBL.Concretes
                 throw;
             }
         }
+
+        public Task<RatingsDto> GetMovieDetails(int movieId, int userId)
+        {
+            try
+            {
+                var result = _movie.GetMovieDetails(movieId, userId);
+                return result;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
